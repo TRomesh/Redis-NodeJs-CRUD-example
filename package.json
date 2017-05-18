@@ -2,9 +2,9 @@
   "name": "redis-nodejs-crud-example",
   "version": "1.0.0",
   "description": "An Example Application for NodeJs & Redis CRUD",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node app.js"
   },
   "keywords": [
     "NodeJS",
