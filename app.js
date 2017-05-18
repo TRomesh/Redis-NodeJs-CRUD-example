@@ -34,8 +34,8 @@ app.get('/',(req,res,next)=>{
 });
 
 // search processing
-app.post('/user/search',(req,res,next)=>{
-  let id = req.body.id;
+app.get('/user/search',(req,res,next)=>{
+  let id = req.query.id;
 
   client.hgetall(id,(err,obj)=>{
     if(!obj){
@@ -52,7 +52,39 @@ app.post('/user/search',(req,res,next)=>{
 
 });
 
+// add userpage
+app.get('/user/add',(req,res,next)=>{
+ res.render('adduser');
+});
 
+// add user
+app.post('/user/add',(req,res,next)=>{
+ let id=req.body.id;
+ let fname=req.body.firstname;
+ let lname=req.body.lastname;
+ let email=req.body.email;
+ let phone=req.body.phone;
+
+ client.hmset(id,[
+   'firstname',fname,
+   'lastname',lname,
+   'email',email,
+   'phone',phone
+ ],(err,reply)=>{
+    if(err){
+      console.log(err);
+    }else {
+      console.log(reply);
+      res.redirect('/');
+    }
+ });
+});
+
+//Delete user
+app.delete('/user/delete/:id',(req,res,next)=>{
+  client.del(req.params.id);
+  res.redirect('/');
+});
 
 app.listen(port,()=>{
   console.log('Server started on port :'+port);
